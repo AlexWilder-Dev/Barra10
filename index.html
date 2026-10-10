@@ -3,19 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Barra10 · Parrilla argentina in Broadway Market, Tooting</title>
+    <title>Barra10 · Argentinian grill, Broadway Market, Tooting</title>
     <meta
       name="description"
-      content="Argentine steak on a wood-and-charcoal grill, inside Broadway Market on Tooting High Street. Empanadas, ceviche, tacos and Malbec. Open Tuesday to Saturday."
+      content="Independent Argentinian steakhouse in Broadway Market, Tooting. Steaks over wood and charcoal from chef patron Dani Cives, with ceviche, empanadas and tacos. Tuesday to Saturday."
     />
-    <meta name="theme-color" content="#0e0d0c" />
+    <meta name="theme-color" content="#090807" />
     <meta property="og:type" content="restaurant" />
-    <meta property="og:title" content="Barra10 · Parrilla argentina, Tooting" />
-    <meta property="og:description" content="Argentine steak on a wood-and-charcoal grill, inside Broadway Market, Tooting." />
-    <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="assets/fonts/ultra.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="assets/fonts/archivo-var.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="assets/styles.css" />
+    <meta property="og:title" content="Barra10 · Argentinian grill, Tooting" />
+    <meta property="og:description" content="Steaks over wood and charcoal, in Broadway Market, Tooting." />
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="assets/fonts/cormorant.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="assets/fonts/jost.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="assets/site.css" />
+    <script>
+      document.documentElement.classList.add('js')
+    </script>
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -24,6 +27,7 @@
         "servesCuisine": ["Argentinian", "Steakhouse"],
         "priceRange": "££",
         "telephone": "+442086170100",
+        "email": "barra10uk@gmail.com",
         "acceptsReservations": true,
         "address": {
           "@type": "PostalAddress",
@@ -42,250 +46,325 @@
     </script>
   </head>
   <body>
-    <a class="skip" href="#carta">Skip to the menu</a>
+    <a class="skip" href="#menu">Skip to the menu</a>
 
     <!--
       Venue facts are from barra10.co.uk and public listings (October 2026).
       Anything marked VERIFY needs confirming with the restaurant.
-      The look borrows from fileteado porteño, the painted sign-work of Buenos Aires.
     -->
 
-    <header class="bar" data-bar>
-      <a class="bar__mark" href="#top">Barra<span>10</span></a>
-      <nav class="bar__nav" aria-label="Sections">
-        <a href="#carta">Menu</a>
-        <a href="#familia">Who we are</a>
-        <a href="#donde">Find us</a>
+    <canvas class="smoke" aria-hidden="true" data-smoke></canvas>
+
+    <header class="top" data-top>
+      <a class="wordmark" href="#top" aria-label="Barra10, back to top">Barra<span>10</span></a>
+      <nav class="top__nav" id="nav" aria-label="Main">
+        <a href="#kitchen">Kitchen</a>
+        <a href="#menu">Menu</a>
+        <a href="#visit">Visit</a>
+        <a class="top__reserve" href="#reserve">Reserve</a>
       </nav>
-      <a class="bar__call" href="tel:+442086170100">Call <span>020 8617 0100</span></a>
+      <button class="top__toggle" type="button" aria-expanded="false" aria-controls="nav" data-toggle>Menu</button>
     </header>
 
     <main>
-      <!-- The sign -->
-      <section class="sign" id="top" aria-labelledby="name">
-        <div class="frame sign__frame">
-          <nav class="sign__nav" aria-label="Main">
-            <a href="#carta">Menu</a>
-            <a class="wide-only" href="#familia">Who we are</a>
-            <a href="#donde">Find us</a>
-            <a href="#reservas">Book</a>
-          </nav>
-
-          <div class="sign__body">
-            <p class="ribbon">Parrilla argentina</p>
-            <h1 class="sign__name" id="name">
-              <span class="visually-hidden">Barra10</span>
-              <span class="painted" aria-hidden="true">Barra</span>
-              <span class="medallion" aria-hidden="true">
-                <img class="medallion__sun" src="assets/img/sun.svg" alt="" width="200" height="200" />
-                <span class="medallion__num">10</span>
-              </span>
-            </h1>
-            <img class="divider" src="assets/img/divider.svg" alt="" width="320" height="40" />
-            <p class="sign__where">Broadway Market · Tooting</p>
-            <p class="sign__pitch">
-              Argentine steak on a wood-and-charcoal grill, in the covered market on Tooting High Street.
-            </p>
-            <div class="plaques">
-              <a class="plaque" href="tel:+442086170100">Call 020 8617 0100</a>
-              <a class="plaque plaque--line" href="#carta">See the menu</a>
-            </div>
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__main">
+          <p class="eyebrow">Parrilla · Broadway Market, Tooting</p>
+          <h1 class="hero__title" id="hero-title">Barra<em>10</em></h1>
+          <p class="hero__lede">
+            An open grill fed with wood and charcoal, and a chef who has spent twenty-five years learning when to
+            leave a good piece of meat alone.
+          </p>
+          <div class="hero__actions">
+            <a class="button" href="#reserve">Reserve a table</a>
+            <a class="arrow-link" href="#menu">See the menu</a>
           </div>
+        </div>
 
-          <p class="sign__status" data-status>
-            <span class="dot" aria-hidden="true"></span>
-            <span data-status-text>Open Tuesday to Saturday</span>
+        <!-- VERIFY: hours -->
+        <dl class="hero__hours">
+          <div><dt>Tue – Fri</dt><dd>Dinner from 17:30</dd></div>
+          <div><dt>Saturday</dt><dd>Lunch &amp; dinner</dd></div>
+          <div><dt>Sun · Mon</dt><dd>Closed</dd></div>
+          <div class="status" data-status>
+            <dt><span class="status__dot" aria-hidden="true"></span><span class="visually-hidden">Now</span></dt>
+            <dd data-status-text>Tuesday to Saturday</dd>
+          </div>
+        </dl>
+      </section>
+
+      <!-- I. Kitchen -->
+      <section class="kitchen" id="kitchen" aria-labelledby="kitchen-title">
+        <p class="numeral" aria-hidden="true">I</p>
+        <div class="kitchen__body">
+          <h2 class="label" id="kitchen-title">The kitchen</h2>
+          <!-- VERIFY: philosophy paraphrased from barra10.co.uk -->
+          <p class="statement" data-reveal>
+            Exceptional ingredients, handled well and cooked simply. Here, that comes down to one thing above all
+            else: <em>charcoal.</em>
+          </p>
+          <div class="kitchen__cols" data-reveal>
+            <p>
+              Chef patron Dani Cives has cooked for more than twenty-five years, in Argentina, Mexico, Italy and
+              the UK. At Barra10 he works an open grill fed with wood and charcoal. It’s where the steaks and the
+              octopus get their char.
+            </p>
+            <p>
+              The menu carries both sides of the family. Argentine steak and empanadas from his; ceviche and tacos
+              from the Mexican side. His co-owner, Marion, runs the room.
+            </p>
+          </div>
+        </div>
+        <figure class="kitchen__photo" data-photo data-reveal>
+          <img
+            src="https://unsplash.com/photos/Xm8XD2b9AUs/download?force=true&amp;w=1100"
+            srcset="
+              https://unsplash.com/photos/Xm8XD2b9AUs/download?force=true&amp;w=700   700w,
+              https://unsplash.com/photos/Xm8XD2b9AUs/download?force=true&amp;w=1100 1100w
+            "
+            sizes="(min-width: 1000px) 34vw, 90vw"
+            alt="Steak on a charcoal grill over open flame"
+            width="1100"
+            height="1375"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
+      </section>
+
+      <!-- Placeholder photography (Unsplash). Replace with the restaurant's own. -->
+      <section class="reel" aria-label="From the kitchen" data-reel>
+        <figure data-photo>
+          <img
+            src="https://unsplash.com/photos/XY-V_o-ykuk/download?force=true&amp;w=1200"
+            srcset="
+              https://unsplash.com/photos/XY-V_o-ykuk/download?force=true&amp;w=700   700w,
+              https://unsplash.com/photos/XY-V_o-ykuk/download?force=true&amp;w=1200 1200w
+            "
+            sizes="(min-width: 900px) 42vw, 85vw"
+            alt="A medium-rare steak being sliced on a wooden board"
+            width="1200"
+            height="1500"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Medium-rare, sliced</figcaption>
+        </figure>
+        <figure data-photo>
+          <img
+            src="https://unsplash.com/photos/5w2hjEJ06b0/download?force=true&amp;w=900"
+            srcset="
+              https://unsplash.com/photos/5w2hjEJ06b0/download?force=true&amp;w=600 600w,
+              https://unsplash.com/photos/5w2hjEJ06b0/download?force=true&amp;w=900 900w
+            "
+            sizes="(min-width: 900px) 29vw, 85vw"
+            alt="Glowing embers and charcoal"
+            width="900"
+            height="1125"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Wood &amp; charcoal</figcaption>
+        </figure>
+        <figure data-photo>
+          <img
+            src="https://unsplash.com/photos/-7ZtWjzo-68/download?force=true&amp;w=900"
+            srcset="
+              https://unsplash.com/photos/-7ZtWjzo-68/download?force=true&amp;w=600 600w,
+              https://unsplash.com/photos/-7ZtWjzo-68/download?force=true&amp;w=900 900w
+            "
+            sizes="(min-width: 900px) 29vw, 85vw"
+            alt="Chargrilled octopus"
+            width="900"
+            height="1125"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption>Chargrilled octopus</figcaption>
+        </figure>
+      </section>
+
+      <!-- II. Menu -->
+      <section class="menu" id="menu" aria-labelledby="menu-title">
+        <header class="menu__head">
+          <p class="numeral numeral--center" aria-hidden="true">II</p>
+          <h2 class="menu__title" id="menu-title">The menu</h2>
+          <p class="menu__intro">
+            A guide to what’s usually on. Specials change, and are pinned to the menu on the night.
+          </p>
+        </header>
+
+        <!-- VERIFY: steak nights and prices from barra10.co.uk (September 2026). -->
+        <section class="nights" aria-labelledby="nights-title" data-reveal>
+          <h3 class="label label--center" id="nights-title">Steak nights</h3>
+          <ul>
+            <li>
+              <span class="nights__when">Tuesday &amp; Wednesday</span>
+              <span class="nights__what">Flank steak, chimichurri</span>
+              <span class="nights__price">£15</span>
+            </li>
+            <li>
+              <span class="nights__when">Thursday</span>
+              <span class="nights__what">Steaks to share</span>
+              <span class="nights__price">£33</span>
+            </li>
+            <li>
+              <span class="nights__when">Saturday, before 18:00</span>
+              <span class="nights__what">Steaks to share</span>
+              <span class="nights__price">£33</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- VERIFY: dishes from the official site and reviews. -->
+        <div class="carte">
+          <section class="course" aria-labelledby="c1" data-reveal>
+            <h3 class="course__title" id="c1">From the grill</h3>
+            <ul>
+              <li><span class="dish">Rib-eye</span><span class="desc">chimichurri</span></li>
+              <li><span class="dish">Flank</span><span class="desc">chimichurri</span></li>
+              <li><span class="dish">Bavette &amp; entraña</span><span class="desc">to share</span></li>
+              <li><span class="dish">Short rib</span><span class="desc">braised in Malbec</span></li>
+            </ul>
+          </section>
+          <section class="course" aria-labelledby="c2" data-reveal>
+            <h3 class="course__title" id="c2">To start</h3>
+            <ul>
+              <li><span class="dish">Padrón peppers</span><span class="desc">blistered, salted</span></li>
+              <li><span class="dish">Ox cheek nuggets</span></li>
+              <li><span class="dish">Crab croquettes</span></li>
+              <li><span class="dish">Octopus</span><span class="desc">chargrilled</span></li>
+            </ul>
+          </section>
+          <section class="course" aria-labelledby="c3" data-reveal>
+            <h3 class="course__title" id="c3">Empanadas</h3>
+            <ul>
+              <li><span class="dish">Argentinian beef</span><span class="desc">freshly baked</span></li>
+              <li><span class="dish">Crab</span></li>
+            </ul>
+          </section>
+          <section class="course" aria-labelledby="c4" data-reveal>
+            <h3 class="course__title" id="c4">Ceviche &amp; tacos</h3>
+            <ul>
+              <li><span class="dish">Ceviche</span><span class="desc">fish cured in citrus</span></li>
+              <li><span class="dish">Tacos</span><span class="desc">ask what’s on</span></li>
+            </ul>
+          </section>
+          <section class="course" aria-labelledby="c5" data-reveal>
+            <h3 class="course__title" id="c5">To finish</h3>
+            <ul>
+              <li><span class="dish">The plant pot</span><span class="desc">the house dessert</span></li>
+            </ul>
+          </section>
+          <section class="course" aria-labelledby="c6" data-reveal>
+            <h3 class="course__title" id="c6">To drink</h3>
+            <ul>
+              <li><span class="dish">Malbec</span><span class="desc">and a short Argentine list</span></li>
+              <li><span class="dish">Cocktails, beer, coffee</span></li>
+            </ul>
+          </section>
+        </div>
+
+        <!-- VERIFY: service charge from barra10.co.uk -->
+        <p class="menu__small">
+          A 13.5% service charge is added to the bill. Please tell us about allergies when you order.
+        </p>
+      </section>
+
+      <!-- III. People -->
+      <section class="people" id="people" aria-labelledby="people-title">
+        <p class="numeral" aria-hidden="true">III</p>
+        <div class="people__body">
+          <h2 class="label" id="people-title">The people</h2>
+          <!-- VERIFY: team from barra10.co.uk -->
+          <ul class="people__list" data-reveal>
+            <li><span class="person">Dani Cives</span><span class="role">Founder &amp; chef patron</span></li>
+            <li><span class="person">Marion</span><span class="role">Co-owner &amp; front of house</span></li>
+          </ul>
+          <p class="people__note" data-reveal>
+            With a charcoal grill chef, a front-of-house supervisor, and a kitchen porter who also happens to be
+            the ceviche master.
           </p>
         </div>
       </section>
 
-      <!-- The menu board -->
-      <section class="board" id="carta" aria-labelledby="carta-title">
-        <div class="frame board__frame">
-          <header class="board__head">
-            <h2 class="painted painted--title" id="carta-title">La carta</h2>
-            <p class="subtitle">The menu</p>
-            <p class="board__note">
-              What’s usually on. The day’s cuts are chalked up on the board at the counter.
-            </p>
-          </header>
+      <!-- IV. Visit -->
+      <section class="visit" id="visit" aria-labelledby="visit-title">
+        <p class="numeral" aria-hidden="true">IV</p>
+        <div class="visit__where" data-reveal>
+          <h2 class="label" id="visit-title">Visit</h2>
+          <!-- VERIFY: address (one listing gives SW17 0SP) -->
+          <address class="address">
+            Unit 16, Broadway Market<br />
+            Tooting High Street<br />
+            London SW17 0RL
+          </address>
+          <p class="visit__how">
+            We’re inside Broadway Market; walk in from Tooting High Street. Tooting Broadway station (Northern
+            line) is about two minutes away.
+          </p>
+          <a
+            class="arrow-link"
+            href="https://www.google.com/maps/search/?api=1&amp;query=Barra10%2C%20Broadway%20Market%2C%20Tooting%20High%20Street%2C%20London%20SW17%200RL"
+            target="_blank"
+            rel="noopener"
+            >Directions<span class="visually-hidden"> (opens Google Maps)</span></a
+          >
+        </div>
 
-          <!-- VERIFY: offers and prices from barra10.co.uk; they change. -->
-          <div class="tickets" aria-label="Steak deals">
-            <p class="ticket">
-              <span class="ticket__what">Flank steak <small>with chimichurri</small></span>
-              <span class="ticket__price">£15</span>
-            </p>
-            <p class="ticket ticket--tilt">
-              <span class="ticket__what">Bavette &amp; entraña <small>to share, with chimichurri</small></span>
-              <span class="ticket__price">£33</span>
-            </p>
-          </div>
-
-          <!-- VERIFY: dishes from the official site and reviews; no prices beyond the deals above. -->
-          <div class="carta">
-            <section class="carta__group" aria-labelledby="g1">
-              <h3 class="carta__title" id="g1">A la parrilla <span>From the grill</span></h3>
-              <ul class="dishes">
-                <li><b>Rib-eye</b> with chimichurri</li>
-                <li><b>Flank steak</b> sliced, with chimichurri</li>
-                <li><b>Bavette &amp; entraña</b> two cuts, to share</li>
-                <li><b>Short rib</b> braised in Malbec</li>
-              </ul>
-            </section>
-
-            <section class="carta__group" aria-labelledby="g2">
-              <h3 class="carta__title" id="g2">Para picar <span>To pick at</span></h3>
-              <ul class="dishes">
-                <li><b>Padrón peppers</b> blistered and salted</li>
-                <li><b>Ox cheek nuggets</b> crumbed and fried</li>
-                <li><b>Crab croquettes</b></li>
-                <li><b>Chargrilled octopus</b></li>
-              </ul>
-            </section>
-
-            <section class="carta__group" aria-labelledby="g3">
-              <h3 class="carta__title" id="g3">Empanadas <span>Baked fresh</span></h3>
-              <ul class="dishes">
-                <li><b>Argentinian beef</b></li>
-                <li><b>Crab</b></li>
-              </ul>
-            </section>
-
-            <section class="carta__group" aria-labelledby="g4">
-              <h3 class="carta__title" id="g4">Del lado mexicano <span>From the Mexican side</span></h3>
-              <ul class="dishes">
-                <li><b>Ceviche</b> fish cured in citrus</li>
-                <li><b>Tacos</b> ask what’s in them today</li>
-              </ul>
-            </section>
-
-            <section class="carta__group" aria-labelledby="g5">
-              <h3 class="carta__title" id="g5">Postre <span>Dessert</span></h3>
-              <ul class="dishes">
-                <li><b>The plant pot</b> the house dessert</li>
-              </ul>
-            </section>
-
-            <section class="carta__group" aria-labelledby="g6">
-              <h3 class="carta__title" id="g6">Para tomar <span>To drink</span></h3>
-              <ul class="dishes">
-                <li><b>Malbec</b> and a short list of other Argentine wines</li>
-                <li><b>Cocktails, beer, coffee</b></li>
-              </ul>
-            </section>
-          </div>
-
-          <p class="board__foot">Allergies or dietary needs? Tell us when you order.</p>
+        <div class="visit__hours" data-reveal>
+          <p class="status status--inline" data-status>
+            <span class="status__dot" aria-hidden="true"></span>
+            <span data-status-text>Tuesday to Saturday</span>
+          </p>
+          <!-- VERIFY: hours. Official site: dinner Tue–Fri, lunch & dinner Sat, closed Sun & Mon. -->
+          <table class="hours" data-hours>
+            <caption class="visually-hidden">Opening hours, London time</caption>
+            <tbody>
+              <tr data-day="2" data-open="17:30" data-close="22:00"><th scope="row">Tuesday</th><td>17:30 – 22:00</td></tr>
+              <tr data-day="3" data-open="17:30" data-close="22:00"><th scope="row">Wednesday</th><td>17:30 – 22:00</td></tr>
+              <tr data-day="4" data-open="17:30" data-close="22:00"><th scope="row">Thursday</th><td>17:30 – 22:00</td></tr>
+              <tr data-day="5" data-open="17:30" data-close="23:00"><th scope="row">Friday</th><td>17:30 – 23:00</td></tr>
+              <tr data-day="6" data-open="12:00" data-close="23:00"><th scope="row">Saturday</th><td>12:00 – 23:00</td></tr>
+              <tr data-day="0"><th scope="row">Sunday</th><td>Closed</td></tr>
+              <tr data-day="1"><th scope="row">Monday</th><td>Closed</td></tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <!-- Who's cooking -->
-      <section class="familia" id="familia" aria-labelledby="familia-title">
-        <div class="familia__inner">
-          <div class="cameo" aria-hidden="true">
-            <img src="assets/img/sun.svg" alt="" width="200" height="200" />
-            <!-- VERIFY: opening year (local press, May 2018) -->
-            <span class="cameo__text">Desde<br />2018</span>
-          </div>
-
-          <div class="familia__copy">
-            <h2 class="painted painted--title" id="familia-title">La familia</h2>
-            <p class="subtitle">Who’s cooking</p>
-            <!-- VERIFY: story details from barra10.co.uk -->
-            <p>
-              Barra10 is Dani Cives’s place. He’s Argentinian and has been cooking for more than 25 years, in
-              Argentina, Mexico, Italy and now the UK.
-            </p>
-            <p>
-              He runs it with his wife, who is Mexican, which is why ceviche and tacos sit on the menu next to the
-              steak.
-            </p>
-            <p>The grill burns wood and charcoal. That’s where the steaks and the octopus get their char.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Where -->
-      <section class="donde" id="donde" aria-labelledby="donde-title">
-        <div class="donde__inner">
-          <div class="donde__where">
-            <p class="street" aria-hidden="true">
-              <small>London Borough of Wandsworth</small>
-              <span>Tooting High Street <em>SW17</em></span>
-            </p>
-
-            <h2 class="painted painted--title painted--ink" id="donde-title">Dónde</h2>
-            <p class="subtitle subtitle--ink">Find us</p>
-
-            <!-- VERIFY: address and postcode (one listing says SW17 0SP) -->
-            <address class="address">
-              Unit 16, Broadway Market<br />
-              Tooting High Street<br />
-              London SW17 0RL
-            </address>
-            <p>
-              Walk into Broadway Market from Tooting High Street and you’ll find us inside. Tooting Broadway station
-              (Northern line) is about two minutes away.
-            </p>
-            <div class="plaques plaques--left">
-              <a
-                class="plaque"
-                href="https://www.google.com/maps/search/?api=1&amp;query=Barra10%2C%20Broadway%20Market%2C%20Tooting%20High%20Street%2C%20London%20SW17%200RL"
-                target="_blank"
-                rel="noopener"
-              >
-                Directions<span class="visually-hidden"> (opens Google Maps)</span>
-              </a>
-              <a class="plaque plaque--ink" href="tel:+442086170100">Call us</a>
-            </div>
-          </div>
-
-          <div class="frame frame--small horario">
-            <h3 class="horario__title">Horario <span>Opening hours</span></h3>
-            <p class="horario__status" data-status>
-              <span class="dot" aria-hidden="true"></span>
-              <span data-status-text>Open Tuesday to Saturday</span>
-            </p>
-            <!-- VERIFY: hours. Official site: dinner Tue–Fri, lunch & dinner Sat, closed Sun & Mon. -->
-            <table class="hours" data-hours>
-              <caption class="visually-hidden">Opening hours, London time</caption>
-              <tbody>
-                <tr data-day="2" data-open="17:30" data-close="22:00"><th scope="row">Tuesday</th><td>17:30 – 22:00</td></tr>
-                <tr data-day="3" data-open="17:30" data-close="22:00"><th scope="row">Wednesday</th><td>17:30 – 22:00</td></tr>
-                <tr data-day="4" data-open="17:30" data-close="22:00"><th scope="row">Thursday</th><td>17:30 – 22:00</td></tr>
-                <tr data-day="5" data-open="17:30" data-close="23:00"><th scope="row">Friday</th><td>17:30 – 23:00</td></tr>
-                <tr data-day="6" data-open="12:00" data-close="23:00"><th scope="row">Saturday</th><td>12:00 – 23:00</td></tr>
-                <tr data-day="0" class="is-closed"><th scope="row">Sunday</th><td>Closed</td></tr>
-                <tr data-day="1" class="is-closed"><th scope="row">Monday</th><td>Closed</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Book -->
-      <section class="reservas" id="reservas" aria-labelledby="reservas-title">
-        <h2 class="subtitle subtitle--light" id="reservas-title">Reservas · Booking</h2>
-        <a class="phone painted" href="tel:+442086170100">020&nbsp;8617&nbsp;0100</a>
-        <p class="reservas__line">
-          Walk in whenever we’re open. If there are a few of you, or it’s a Friday or Saturday, ring ahead and we’ll
-          hold a table.
+      <!-- V. Reserve -->
+      <section class="reserve" id="reserve" aria-labelledby="reserve-title">
+        <p class="numeral numeral--center" aria-hidden="true">V</p>
+        <h2 class="reserve__title" id="reserve-title">Reserve a table</h2>
+        <p class="reserve__line">
+          Walk-ins are welcome. For evenings and Saturdays, we’d book.
         </p>
-        <!-- VERIFY: Instagram handle -->
-        <a class="insta" href="https://www.instagram.com/barra10uk/" target="_blank" rel="noopener">@barra10uk on Instagram</a>
+        <div class="reserve__ways">
+          <!-- VERIFY: the restaurant's existing reservations page -->
+          <a class="button" href="https://www.barra10.co.uk/reservation" target="_blank" rel="noopener"
+            >Book online<span class="visually-hidden"> (opens the reservations page)</span></a
+          >
+          <a class="phone" href="tel:+442086170100">020 8617 0100</a>
+        </div>
+        <p class="reserve__more">
+          <a href="mailto:barra10uk@gmail.com">barra10uk@gmail.com</a>
+          <span aria-hidden="true">·</span>
+          <!-- VERIFY: Instagram handle -->
+          <a href="https://www.instagram.com/barra10uk/" target="_blank" rel="noopener">Instagram @barra10uk</a>
+        </p>
       </section>
     </main>
 
     <footer class="foot">
-      <img src="assets/img/divider.svg" alt="" width="320" height="40" />
-      <p>Barra10 · Unit 16, Broadway Market, Tooting High Street, London SW17 0RL · 020 8617 0100</p>
+      <p class="wordmark wordmark--small">Barra<span>10</span></p>
+      <p>Unit 16, Broadway Market, Tooting High Street, London SW17 0RL</p>
       <p class="foot__small">
         © <span data-year>2026</span> Barra10 ·
         <a href="https://github.com/AlexWilder-Dev" target="_blank" rel="noopener">Site by AlexWilder-Dev</a>
       </p>
     </footer>
 
-    <script src="assets/app.js" defer></script>
+    <script src="assets/site.js" defer></script>
   </body>
 </html>

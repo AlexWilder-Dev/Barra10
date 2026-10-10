@@ -1,31 +1,27 @@
 # Barra10
 
-Website for **Barra10**, an Argentinian parrilla inside Broadway Market, Tooting.
+Website for **Barra10**, an independent Argentinian steakhouse in Broadway Market, Tooting.
 
 Live: https://alexwilder-dev.github.io/Barra10/
 
-## The idea
+## Direction
 
-The look comes from *fileteado porteño*, the painted sign-work you see on parrillas, shopfronts and old
-buses in Buenos Aires: pinstriped frames that curl into spirals at the corners, heavy shaded lettering,
-ribbons and the sun, in red, gold and sky blue on black. The menu is a painted board in the green of the
-restaurant's own room, and the address sits on a London enamel street sign, because this is Buenos Aires
-landing on Tooting High Street.
-
-There are no stock photos. The page stands up on lettering and ornament alone, like a painted sign.
+Dark, smoke and fire, handled with restraint. The page sits on near-black with smoke rising through it,
+lit from below by embers. That's a small WebGL shader, not an illustration. Type is Cormorant for the
+voice and Jost in spaced capitals for detail, with a single ember accent and hairline rules. The menu is set like a
+fine-dining card. The copy is short and factual, built from what the restaurant says about itself.
 
 ## Files
 
 ```
-index.html            all content
-assets/styles.css     styles
-assets/app.js         open-now status, today's hours, top bar (optional; the page works without it)
-assets/fonts/         Ultra and Archivo (Google Fonts, SIL Open Font License)
-assets/img/           frame, divider and sun ornaments, favicon
-tools/ornaments.py    regenerates the ornaments: python3 tools/ornaments.py assets/img
+index.html          all content
+assets/site.css     styles
+assets/site.js      smoke shader, live opening status, header and mobile menu, reveals
+assets/fonts/       Cormorant and Jost (Google Fonts, SIL Open Font License)
+assets/favicon.svg
 ```
 
-No build step and no dependencies. To preview locally:
+No build step and no dependencies. Preview locally with any static server:
 
 ```bash
 python3 -m http.server 8080   # then open http://localhost:8080
@@ -36,21 +32,35 @@ python3 -m http.server 8080   # then open http://localhost:8080
 `.github/workflows/pages.yml` publishes the repository root to GitHub Pages on every push to `main`.
 In **Settings → Pages** the source must be **GitHub Actions**.
 
-## Editing
+## How the smoke behaves
 
-- **Hours**: the hours table in `index.html` drives the "Open now" status and the "Hoy" (today) marker.
-  Also update the structured data (`application/ld+json`) at the top of the page.
-- **Menu**: plain HTML in the `#carta` section. Deals with prices are the two tickets above the list.
-- **Photos**: the oval cameo in "La familia" is the natural place for a photo of the chef at the grill.
+- Rendered at reduced resolution (smoke is soft), about 30fps, paused when the tab is hidden.
+- The ember glow is strongest under the hero and settles as you scroll.
+- Runs only on a hardware GPU. Devices that would fall back to software rendering, and anything without
+  WebGL, get a still ember glow instead.
+- With reduced motion turned on, one still frame is drawn and nothing animates.
+
+## Photos
+
+The kitchen photo and the three-image reel are **placeholders from Unsplash**, loaded from Unsplash. Replace
+them with the restaurant's own photography (put files in `assets/` and update the `src`/`srcset`). Any photo
+that fails to load is removed cleanly, and if all three reel photos fail, the reel is removed.
+
+| Where | Source |
+| --- | --- |
+| Kitchen | https://unsplash.com/photos/Xm8XD2b9AUs (Philipp Kämmerer) |
+| Reel: steak | https://unsplash.com/photos/XY-V_o-ykuk (José Ignacio Pompé) |
+| Reel: embers | https://unsplash.com/photos/glowing-hot-embers-and-coals-in-a-fire-5w2hjEJ06b0 (Alican Leblebici) |
+| Reel: octopus | https://unsplash.com/photos/grilled-octopus-dishes--7ZtWjzo-68 (Elle Hughes) |
 
 ## Sources and things to confirm
 
-Venue details come from the restaurant's own site (barra10.co.uk) and public listings, checked October 2026.
-Everything marked `VERIFY` in `index.html` should be confirmed with the restaurant:
+From barra10.co.uk and public listings, October 2026. Items marked `VERIFY` in `index.html`:
 
-- Address and postcode: Unit 16, Broadway Market, Tooting High Street, London SW17 0RL (one listing says SW17 0SP)
-- Hours: Tue–Thu 17:30–22:00, Fri 17:30–23:00, Sat 12:00–23:00, Sun & Mon closed (listings disagree on Saturday's start)
-- Deals: flank steak £15; bavette & entraña to share £33
-- Menu items, from the official site and reviews
-- Story: chef-patron Dani Cives, Argentinian, with his Mexican wife; wood-and-charcoal grill; open since 2018
-- Instagram: @barra10uk
+- Address: Unit 16, Broadway Market, Tooting High Street, London SW17 0RL (one listing says SW17 0SP)
+- Hours: Tue–Thu 17:30–22:00, Fri 17:30–23:00, Sat 12:00–23:00, Sun & Mon closed
+- Steak nights (dated September 2026): Tue & Wed flank £15; Thu steaks to share £33; Sat before 18:00 steaks to share £33
+- 13.5% service charge
+- Team: Dani Cives (founder, chef patron), Marion (co-owner, front of house), plus grill chef, FOH supervisor, kitchen porter and ceviche master
+- "Book online" links to the restaurant's existing reservations page
+- Email barra10uk@gmail.com, phone 020 8617 0100, Instagram @barra10uk
