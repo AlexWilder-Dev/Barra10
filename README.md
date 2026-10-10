@@ -2,6 +2,8 @@
 
 Speculative demo site for **Barra10**, an Argentinian grill inside Tooting Broadway Market, London SW17.
 
+Live demo: https://alexwilder-dev.github.io/Barra10/
+
 Front-end only: everything runs on static data. There is no CMS, database, payments, analytics or booking
 backend. The booking form is a **demo**: it never sends anything anywhere.
 
@@ -22,7 +24,8 @@ The workflow in `.github/workflows/deploy.yml` builds and publishes `dist/` on e
 (or run it manually from the Actions tab).
 
 1. Push the repo to GitHub.
-2. In **Settings → Pages**, set **Source** to **GitHub Actions**.
+2. In **Settings → Pages**, set **Source** to **GitHub Actions** (not "Deploy from a branch", which
+   publishes the unbuilt source and shows a blank page).
 3. Push to `main`. The site appears at `https://<user>.github.io/<repo>/`.
 
 The site's base path comes from the `BASE_PATH` environment variable at build time. The workflow sets it to
