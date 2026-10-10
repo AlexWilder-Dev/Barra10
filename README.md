@@ -1,103 +1,65 @@
 # Barra10
 
-Speculative demo site for **Barra10**, an Argentinian grill inside Tooting Broadway Market, London SW17.
+Website for **Barra10**, an independent Argentinian steakhouse inside Broadway Market, Tooting.
 
-Live demo: https://alexwilder-dev.github.io/Barra10/
+Live: https://alexwilder-dev.github.io/Barra10/
 
-Front-end only: everything runs on static data. There is no CMS, database, payments, analytics or booking
-backend. The booking form is a **demo**: it never sends anything anywhere.
+## What's here
 
-## Run it
+A single static page with no build step and no dependencies.
 
-Requires Node 22.12 or newer.
-
-```bash
-npm install
-npm run dev        # local dev server at http://localhost:5173
-npm run build      # type-check, build and prerender to dist/
-npm run preview    # serve the production build at http://localhost:4173
+```
+index.html            all content: hero, menu, story, visit, booking, footer
+assets/css/site.css   styles
+assets/js/site.js     small enhancements: open-now status, mobile nav, map, image fallbacks
+assets/fonts/         Fraunces, Barlow, Barlow Condensed (Google Fonts, SIL Open Font License)
+assets/img/           favicon and monogram
 ```
 
-## Deploy (GitHub Pages)
+## Run it locally
 
-The workflow in `.github/workflows/deploy.yml` builds and publishes `dist/` on every push to `main`
-(or run it manually from the Actions tab).
-
-1. Push the repo to GitHub.
-2. In **Settings → Pages**, set **Source** to **GitHub Actions** (not "Deploy from a branch", which
-   publishes the unbuilt source and shows a blank page).
-3. Push to `main`. The site appears at `https://<user>.github.io/<repo>/`.
-
-The site's base path comes from the `BASE_PATH` environment variable at build time. The workflow sets it to
-`/<repo>/` automatically. For a custom domain, add a repository variable `BASE_PATH` with the value `/`.
-To build for a sub-path locally:
+Any static server works:
 
 ```bash
-BASE_PATH=/Barra10/ npm run build
+python3 -m http.server 8080
+# open http://localhost:8080
 ```
 
-## Editing content
+## Deploy
 
-All content lives in **`src/data/site.ts`**: venue details, opening hours, menu items and prices, section copy
-and image paths. Every unconfirmed value has a `// VERIFY` comment. Search for `VERIFY` before going live.
+`.github/workflows/pages.yml` publishes the repository root to GitHub Pages on every push to `main`.
+In **Settings → Pages**, the source must be **GitHub Actions**.
 
-The live "Open now / Opens at" badge, the hours table, the late-night note and the fake booking slots are all
-computed from the `hours` array in that file (London time).
+## Editing
 
-### Swapping in real photos
+- **Opening hours** live in the hours table in `index.html`. The "Open now" status, the "Today" highlight
+  and everything else read from that table, so change it there. Also update the footer summary and the
+  structured data (`application/ld+json`) at the top of the page.
+- **Menu** is plain HTML in the `#menu` section.
+- **Photos**: replace the `src`/`srcset` of the `<img>` tags with the restaurant's own photos (e.g. put them in
+  `assets/img/`). Each photo frame has a designed fallback, so a missing image never shows a broken icon.
 
-1. Put the venue's photos in `public/images/` (e.g. `public/images/steak.jpg`).
-2. In `src/data/site.ts`, replace the placeholder `src` with `local('images/steak.jpg')` and update the `alt`
-   text.
+## Content sources and things to confirm
 
-Every image slot sits on top of procedural artwork (glowing coals, flames, a plated steak, neon glasses),
-so the page still looks finished if a photo is missing or fails to load.
+Venue details come from the restaurant's site (barra10.co.uk) and public listings, checked October 2026.
+Items marked `VERIFY` in `index.html` should be confirmed with the restaurant:
 
-## Placeholder images
+- Address and postcode: Unit 16, Broadway Market, Tooting High Street, London SW17 0RL (one listing says SW17 0SP)
+- Opening hours: Tue–Thu 17:30–22:00, Fri 17:30–23:00, Sat 12:00–23:00, Sun & Mon closed (listings disagree on Saturday's start time)
+- Steak deals: flank steak £15; bavette & entraña to share £33
+- Menu items, taken from the official site and reviews; no prices are shown apart from the deals
+- Instagram: @barra10uk
+- Story: chef-patron Dani Cives; Argentinian chef and Mexican wife; wood-and-charcoal grill
 
-Free-licence photos from Unsplash ([Unsplash License](https://unsplash.com/license)), loaded from Unsplash
-at runtime. Replace them with the venue's own photos before launch.
+## Placeholder photos (Unsplash)
 
-| Slot | Photo | Photographer |
+Free to use under the [Unsplash License](https://unsplash.com/license). Swap for the restaurant's own photos.
+
+| Where | Source | Photographer |
 | --- | --- | --- |
-| Fire story: charcoal | https://unsplash.com/photos/glowing-hot-embers-and-coals-in-a-fire-5w2hjEJ06b0 | Alican Leblebici |
-| Fire story: flame | https://unsplash.com/photos/D9MDpAjlJ6k | Martin Adams |
-| Fire story: plate | https://unsplash.com/photos/O67LZfeyYBk | Jason Leung |
-| Menu: A la parrilla (steak on the grill) | https://unsplash.com/photos/Xm8XD2b9AUs | Philipp Kämmerer |
-| Menu: Para picar (empanadas) | https://unsplash.com/photos/EGmwwDzme6s | Kristina Tripkovic |
-| Menu: Del mar (octopus) | https://unsplash.com/photos/grilled-octopus-dishes--7ZtWjzo-68 | Elle Hughes |
-| Menu: Postres (ice cream) | https://unsplash.com/photos/1AO-fS1eGAY | Ellie Enchantée |
-| Menu: Bebidas + Late night: Malbec | https://unsplash.com/photos/clear-wine-glass-with-red-wine-dR8t0L8YXsI | See source page |
-| Late night: cocktail | https://unsplash.com/photos/clear-drinking-glass-with-orange-juice-qhfe60zL8-Q | Paige Ledford |
-
-The empanadas photo shows them being folded rather than cooked; a plated shot from the venue will be better.
-
-## Fonts
-
-[Unbounded](https://fonts.google.com/specimen/Unbounded) (display) and
-[Inter](https://fonts.google.com/specimen/Inter) (body) from Google Fonts, both under the SIL Open Font
-License. They are self-hosted from `public/fonts/` (latin subset) so the first paint doesn't wait on a
-third-party stylesheet.
-
-## How it's built
-
-- **Vite + React + TypeScript + Framer Motion.** No other runtime dependencies.
-- **Prerendered.** `npm run build` renders the page to static HTML (`scripts/prerender.mjs`) and inlines the
-  CSS, so content paints before JavaScript loads. React then hydrates it.
-- **Motion.** Every spring comes from `src/lib/springs.ts`. Tune the feel there, not in components.
-- **Hero embers** are a 2D canvas (`src/components/EmberCanvas.tsx`) that pauses when off-screen or when the
-  tab is hidden, and uses fewer particles on small screens.
-- **Reduced motion.** With `prefers-reduced-motion`, the embers, heat shimmer and scroll-scrubbed fire story
-  are switched off. Layout stays the same and simple fades remain.
-- **Booking** (`src/components/Booking.tsx`) is demo-only and clearly marked in code. Replace its `submit`
-  handler with a real booking integration before taking reservations.
-
-```
-src/
-  data/site.ts          all content (VERIFY markers)
-  lib/springs.ts        spring presets
-  lib/hours.ts          open-now logic, London time
-  components/           one component + CSS module per section
-  entry-server.tsx      build-time prerender entry
-scripts/prerender.mjs   injects prerendered HTML + inlines CSS
-```
+| Hero | https://unsplash.com/photos/Xm8XD2b9AUs | Philipp Kämmerer |
+| Our story | https://unsplash.com/photos/close-up-photo-of-grilled-meat-B6kciNEJgN8 | Deby Rodriguez |
+| Strip: steak | https://unsplash.com/photos/XY-V_o-ykuk | José Ignacio Pompé |
+| Strip: octopus | https://unsplash.com/photos/grilled-octopus-dishes--7ZtWjzo-68 | Elle Hughes |
+| Strip: tacos | https://unsplash.com/photos/JiRSy0GfqPA | Tai's Captures |
+| Strip: wine | https://unsplash.com/photos/clear-wine-glass-with-red-wine-dR8t0L8YXsI | see source |
