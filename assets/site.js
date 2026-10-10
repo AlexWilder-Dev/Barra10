@@ -4,6 +4,7 @@
       the tab is hidden, and drawn once, still, for reduced-motion users.
    2. Opening hours: live open/closed status from the hours table.
    3. Header, mobile nav, reveals.
+   4. Booking form: writes the request into WhatsApp or an email.
    -------------------------------------------------------------------------- */
 ;(function () {
   'use strict'
@@ -204,6 +205,164 @@
   }
   updateHours()
   setInterval(updateHours, 60000)
+
+  /* 4. Booking form ---------------------------------------------------------------
+     No backend: the request is written into a WhatsApp message or an email for the
+     guest to send, and the restaurant replies to confirm. */
+
+  var form = document.querySelector('[data-booking]')
+  if (form) {
+    var WHATSAPP = '447466305313' // VERIFY: from a public listing
+    var EMAIL = 'barra10uk@gmail.com'
+    var PHONE = '020 8617 0100'
+    var SEATING = 90 // minutes a table is held on busy nights; last booking is this long before close
+    var STEP = 30
+
+    var f = form.elements
+    var message = form.querySelector('[data-booking-message]')
+    var sends = form.querySelectorAll('[data-via]')
+    var via = 'whatsapp'
+
+    var pad = function (n) {
+      return String(n).padStart(2, '0')
+    }
+    var clock = function (m) {
+      return pad(Math.floor(m / 60) % 24) + ':' + pad(m % 60)
+    }
+    var todayInLondon = function () {
+      return new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/London', year: 'numeric', month: '2-digit', day: '2-digit' }).format(
+        new Date()
+      )
+    }
+    var asDate = function (value) {
+      var p = value.split('-').map(Number)
+      return new Date(p[0], p[1] - 1, p[2])
+    }
+    var say = function (text) {
+      message.textContent = text
+    }
+    var option = function (value, label) {
+      var o = document.createElement('option')
+      o.value = value
+      o.textContent = label
+      f.time.appendChild(o)
+    }
+
+    var today = todayInLondon()
+    f.date.min = today
+    var limit = asDate(today)
+    limit.setDate(limit.getDate() + 90)
+    f.date.max = limit.getFullYear() + '-' + pad(limit.getMonth() + 1) + '-' + pad(limit.getDate())
+
+    var fillTimes = function () {
+      var chosen = f.time.value
+      f.time.innerHTML = ''
+      if (!f.date.value) {
+        option('', 'Choose a date first')
+        f.time.disabled = true
+        return
+      }
+      var day = hours[asDate(f.date.value).getDay()]
+      if (!day) {
+        option('', 'Closed that day')
+        f.time.disabled = true
+        say('We’re closed on Sundays and Mondays. Any day from Tuesday to Saturday works.')
+        return
+      }
+      var earliest = day.open
+      if (f.date.value === today) earliest = Math.max(day.open, Math.ceil((now().m + 30) / STEP) * STEP)
+      var count = 0
+      option('', 'Choose a time')
+      for (var t = day.open; t <= day.close - SEATING; t += STEP) {
+        if (t < earliest) continue
+        option(clock(t), clock(t))
+        count++
+      }
+      if (!count) {
+        f.time.innerHTML = ''
+        option('', 'No tables left today')
+      }
+      f.time.disabled = !count
+      if (chosen) f.time.value = chosen
+      say('')
+    }
+
+    var checkGuests = function () {
+      var big = f.guests.value === '9+'
+      sends.forEach(function (b) {
+        b.disabled = big
+      })
+      say(big ? 'Tables seat up to eight. For a bigger group, please call us on ' + PHONE + '.' : '')
+    }
+
+    f.date.addEventListener('change', function () {
+      f.date.removeAttribute('aria-invalid')
+      fillTimes()
+    })
+    f.guests.addEventListener('change', checkGuests)
+    ;[f.name, f.phone, f.time].forEach(function (el) {
+      el.addEventListener('input', function () {
+        el.removeAttribute('aria-invalid')
+      })
+    })
+    sends.forEach(function (b) {
+      b.addEventListener('click', function () {
+        via = b.getAttribute('data-via')
+      })
+    })
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault()
+      if (e.submitter && e.submitter.getAttribute('data-via')) via = e.submitter.getAttribute('data-via')
+
+      var missing = []
+      var check = function (el, label) {
+        var bad = !el.value.trim()
+        el.setAttribute('aria-invalid', String(bad))
+        if (bad) missing.push({ el: el, label: label })
+      }
+      check(f.name, 'your name')
+      check(f.phone, 'a contact number')
+      check(f.date, 'a date')
+      check(f.time, 'a time')
+      if (missing.length) {
+        var labels = missing.map(function (m) {
+          return m.label
+        })
+        var list = labels.length > 1 ? labels.slice(0, -1).join(', ') + ' and ' + labels[labels.length - 1] : labels[0]
+        say('Please add ' + list + '.')
+        missing[0].el.focus()
+        return
+      }
+
+      var date = asDate(f.date.value)
+      var longDate = date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long' })
+      var shortDate = date.toLocaleDateString('en-GB', { weekday: 'short', day: 'numeric', month: 'short' })
+      var guests = f.guests.value
+      var lines = [
+        'Hello Barra10, I’d like to book a table.',
+        '',
+        'Name: ' + f.name.value.trim(),
+        'Guests: ' + guests,
+        'Date: ' + longDate,
+        'Time: ' + f.time.value,
+        'Contact number: ' + f.phone.value.trim()
+      ]
+      if (f.notes.value.trim()) lines.push('Notes: ' + f.notes.value.trim())
+      var text = lines.join('\n')
+
+      if (via === 'email') {
+        var subject = 'Table for ' + guests + ', ' + shortDate + ' at ' + f.time.value
+        window.location.href = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text)
+        say('Your email app should open with the request written. Send it and we’ll reply to confirm.')
+      } else {
+        window.open('https://wa.me/' + WHATSAPP + '?text=' + encodeURIComponent(text), '_blank', 'noopener')
+        say('WhatsApp should open with your request written. Send it and we’ll reply to confirm.')
+      }
+    })
+
+    fillTimes()
+  }
 
   /* 3. Header, nav, photos, reveals ------------------------------------------------ */
 

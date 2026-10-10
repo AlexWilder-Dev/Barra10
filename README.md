@@ -32,6 +32,16 @@ python3 -m http.server 8080   # then open http://localhost:8080
 `.github/workflows/pages.yml` publishes the repository root to GitHub Pages on every push to `main`.
 In **Settings → Pages** the source must be **GitHub Actions**.
 
+## Booking form
+
+The "Reserve a table" form has no backend. It follows the restaurant's own booking process (name, number of
+diners, date and time, contact number; up to eight per table). On submit, it writes the request into a
+**WhatsApp** message or an **email** for the guest to send, and the restaurant replies to confirm.
+
+- Times are generated from the hours table: every 30 minutes from opening until 90 minutes before closing.
+- Sundays and Mondays are refused, and "More than 8" asks the guest to call.
+- WhatsApp number and email are at the top of the booking section in `assets/site.js`.
+
 ## How the smoke behaves
 
 - Rendered at reduced resolution (smoke is soft), about 30fps, paused when the tab is hidden.
@@ -62,5 +72,6 @@ From barra10.co.uk and public listings, October 2026. Items marked `VERIFY` in `
 - Steak nights (dated September 2026): Tue & Wed flank £15; Thu steaks to share £33; Sat before 18:00 steaks to share £33
 - 13.5% service charge
 - Team: Dani Cives (founder, chef patron), Marion (co-owner, front of house), plus grill chef, FOH supervisor, kitchen porter and ceviche master
-- "Book online" links to the restaurant's existing reservations page
+- WhatsApp number +44 7466 305313 (from a public listing, not the restaurant's own site)
+- Booking rules: up to eight per table; tables held about 1.5 hours on busy nights
 - Email barra10uk@gmail.com, phone 020 8617 0100, Instagram @barra10uk
