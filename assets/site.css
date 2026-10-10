@@ -1016,6 +1016,7 @@ main,
 
 .field {
   display: grid;
+  align-content: start;
   gap: 0.55rem;
 }
 
